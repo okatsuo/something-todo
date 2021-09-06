@@ -55,4 +55,18 @@ describe('Todo', () => {
     const todo = sut.add(fakeTodo)
     await expect(todo).rejects.toThrow()
   })
+
+  test('should return with correct values', async () => {
+    const fakeTodo: IAddTodo = {
+      name: 'valid_name',
+      active: true,
+      user_id: 'valid_id',
+      description: 'valid_description'
+    }
+
+    const { sut } = makeSut()
+    const todo = await sut.add(fakeTodo)
+    expect(todo.id).toBeDefined()
+    expect(todo).toEqual({ id: todo.id, ...fakeTodo })
+  })
 })
