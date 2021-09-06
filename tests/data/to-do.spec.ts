@@ -42,4 +42,17 @@ describe('Todo', () => {
     await sut.add(fakeTodo)
     expect(addTodoSpy).toBeCalledWith(fakeTodo)
   })
+
+  test('should throws if addTodoRepository throws', async () => {
+    const fakeTodo: IAddTodo = {
+      name: 'valid_name',
+      active: true,
+      user_id: 'valid_id',
+      description: 'valid_description'
+    }
+    const { sut, addTodoRepositoryStub } = makeSut()
+    jest.spyOn(addTodoRepositoryStub, 'add').mockImplementationOnce(async () => await Promise.reject(new Error('')))
+    const todo = sut.add(fakeTodo)
+    await expect(todo).rejects.toThrow()
+  })
 })
