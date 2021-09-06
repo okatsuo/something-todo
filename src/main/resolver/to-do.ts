@@ -1,4 +1,5 @@
 import { Arg, Query, Resolver } from 'type-graphql'
+import { makeTodoController } from '../factory/add-to-do'
 import { TodoSchema } from '../schema/to-do'
 
 @Resolver()
@@ -10,6 +11,7 @@ export class TodoResolver {
       @Arg('user_id') userId: string,
       @Arg('active', { nullable: true }) active: boolean
   ): any {
-    return { userId, name, description }
+    const todoController = makeTodoController()
+    return todoController.handle({ name, user_id: userId, active, description })
   }
 }
