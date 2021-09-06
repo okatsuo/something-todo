@@ -3,7 +3,7 @@ import { TodoModel } from '../models/to-do'
 export interface IAddTodo {
   user_id: string
   name: string
-  active?: boolean
+  active: boolean
   description?: string
 }
 
