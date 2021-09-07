@@ -1,17 +1,18 @@
 import { Arg, Mutation, Resolver } from 'type-graphql'
+import { TodoModel } from '../../domain/models/to-do'
 import { makeTodoController } from '../factory/add-to-do'
 import { TodoSchema } from '../schema/to-do'
 
 @Resolver()
 export class TodoResolver {
   @Mutation(() => TodoSchema)
-  todoCreate (
+  async todoCreate (
     @Arg('user_id') userId: string,
       @Arg('name') name: string,
       @Arg('description', { nullable: true }) description: string,
       @Arg('active') active: boolean
-  ): any {
+  ): Promise<TodoModel> {
     const todoController = makeTodoController()
-    return todoController.handle({ name, user_id: userId, active, description })
+    return await todoController.handle({ name, user_id: userId, active, description })
   }
 }
