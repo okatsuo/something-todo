@@ -1,4 +1,4 @@
-import { Todo } from '../../src/data/usecases/to-do'
+import { AddTodo } from '../../src/data/usecases/add-todo'
 import { TodoModel } from '../../src/domain/models/to-do'
 import { IAddTodo, IDbAddTodo } from '../../src/domain/usecases/add-to-do'
 
@@ -16,12 +16,12 @@ const makeAddTodoRepository = (): IDbAddTodo => {
 
 interface ISutType {
   addTodoRepositoryStub: IDbAddTodo
-  sut: Todo
+  sut: AddTodo
 }
 
 const makeSut = (): ISutType => {
   const addTodoRepositoryStub = makeAddTodoRepository()
-  const sut = new Todo(addTodoRepositoryStub)
+  const sut = new AddTodo(addTodoRepositoryStub)
   return {
     sut,
     addTodoRepositoryStub

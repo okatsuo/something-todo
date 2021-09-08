@@ -1,6 +1,6 @@
 import { TodoModel } from '../../../src/domain/models/to-do'
 import { IAddTodo, IDbAddTodo } from '../../../src/domain/usecases/add-to-do'
-import { TodoController } from '../../../src/presentation/to-do/to-do-controller'
+import { AddTodoController } from '../../../src/presentation/todo/todo-controller'
 
 const makeAddTodoStub = (): IDbAddTodo => {
   class AddTodoStub implements IDbAddTodo {
@@ -18,13 +18,13 @@ const makeAddTodoStub = (): IDbAddTodo => {
 }
 
 interface ISutType {
-  sut: TodoController
+  sut: AddTodoController
   addTodoStub: IDbAddTodo
 }
 
 const makeSut = (): ISutType => {
   const addTodoStub = makeAddTodoStub()
-  const sut = new TodoController(addTodoStub)
+  const sut = new AddTodoController(addTodoStub)
 
   return {
     sut,

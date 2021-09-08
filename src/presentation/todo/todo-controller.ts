@@ -1,7 +1,7 @@
 import { TodoModel } from '../../domain/models/to-do'
 import { IAddTodo, IDbAddTodo } from '../../domain/usecases/add-to-do'
 
-export class TodoController {
+export class AddTodoController {
   constructor (
     private readonly addTodo: IDbAddTodo
   ) {}
