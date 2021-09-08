@@ -7,12 +7,12 @@ import { TodoSchema } from '../schema/to-do'
 export class TodoResolver {
   @Mutation(() => TodoSchema)
   async todoCreate (
-    @Arg('user_id') userId: string,
+    @Arg('user_id') user_id: string,
       @Arg('name') name: string,
       @Arg('description', { nullable: true }) description: string,
       @Arg('active') active: boolean
   ): Promise<TodoModel> {
     const todoController = makeTodoController()
-    return await todoController.handle({ name, user_id: userId, active, description })
+    return await todoController.handle({ name, user_id, active, description })
   }
 }
