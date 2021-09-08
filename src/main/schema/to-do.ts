@@ -6,7 +6,7 @@ export class TodoSchema {
   id: string
 
   @Field()
-  userId: string
+  user_id: string
 
   @Field()
   name: string
