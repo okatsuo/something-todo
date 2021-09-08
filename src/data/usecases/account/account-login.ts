@@ -1,8 +1,8 @@
-import { ILoginModel } from '../../domain/models/login'
-import { ILoadAccountByEmail } from '../../domain/usecases/load-account-by-email'
-import { IAccountLogin, ILogin } from '../../domain/usecases/login'
-import { IGenerateAccessToken } from '../protocols/access-token'
-import { IHashComparer } from '../protocols/hashComparer'
+import { ILoginModel } from '../../../domain/models/login'
+import { ILoadAccountByEmail } from '../../../domain/usecases/load-account-by-email'
+import { IAccountLogin, ILogin } from '../../../domain/usecases/login'
+import { IGenerateAccessToken } from '../../protocols/access-token'
+import { IHashComparer } from '../../protocols/hashComparer'
 
 export class AccountLogin implements IAccountLogin {
   constructor (

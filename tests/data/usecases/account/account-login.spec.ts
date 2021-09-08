@@ -1,10 +1,10 @@
-import { IGenerateAccessToken } from '../../src/data/protocols/access-token'
-import { IHashComparer } from '../../src/data/protocols/hashComparer'
-import { AccountLogin } from '../../src/data/usecases/account-login'
-import { IAccountModel } from '../../src/domain/models/account'
-import { ILoadAccountByEmail } from '../../src/domain/usecases/load-account-by-email'
-import { ILogin } from '../../src/domain/usecases/login'
-import { IAccessTokenInput } from '../../src/infra/auth/access-token-adapter'
+import { IGenerateAccessToken } from '../../../../src/data/protocols/access-token'
+import { IHashComparer } from '../../../../src/data/protocols/hashComparer'
+import { AccountLogin } from '../../../../src/data/usecases/account/account-login'
+import { IAccountModel } from '../../../../src/domain/models/account'
+import { ILoadAccountByEmail } from '../../../../src/domain/usecases/load-account-by-email'
+import { ILogin } from '../../../../src/domain/usecases/login'
+import { IAccessTokenInput } from '../../../../src/infra/auth/access-token-adapter'
 
 const makeAccountRepository = (): ILoadAccountByEmail => {
   class AccountRepository implements ILoadAccountByEmail {

@@ -1,6 +1,6 @@
-import { AddTodo } from '../../src/data/usecases/add-todo'
-import { TodoModel } from '../../src/domain/models/to-do'
-import { IAddTodo, IDbAddTodo } from '../../src/domain/usecases/add-to-do'
+import { AddTodo } from '../../../../src/data/usecases/todo/add-todo'
+import { TodoModel } from '../../../../src/domain/models/to-do'
+import { IAddTodo, IDbAddTodo } from '../../../../src/domain/usecases/add-to-do'
 
 const makeAddTodoRepository = (): IDbAddTodo => {
   class AddTodoRepositoryStub implements IDbAddTodo {

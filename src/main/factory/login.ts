@@ -1,4 +1,4 @@
-import { AccountLogin } from '../../data/usecases/account-login'
+import { AccountLogin } from '../../data/usecases/account/account-login'
 import { AccessToken } from '../../infra/auth/access-token-adapter'
 import { BcryptAdapter } from '../../infra/cryptografy/bcrypt-adapter'
 import { AccountMongoRepository } from '../../infra/db/mongodb/account-repository/account'

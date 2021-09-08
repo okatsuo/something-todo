@@ -1,5 +1,5 @@
-import { TodoModel } from '../../domain/models/to-do'
-import { IAddTodo, IDbAddTodo } from '../../domain/usecases/add-to-do'
+import { TodoModel } from '../../../domain/models/to-do'
+import { IAddTodo, IDbAddTodo } from '../../../domain/usecases/add-to-do'
 
 export class AddTodo implements IDbAddTodo {
   constructor (
