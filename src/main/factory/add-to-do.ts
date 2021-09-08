@@ -1,9 +1,9 @@
-import { Todo } from '../../data/usecases/to-do'
+import { AddTodo } from '../../data/usecases/add-todo'
 import { TodoRepository } from '../../infra/db/mongodb/todo-repository/todo'
-import { TodoController } from '../../presentation/to-do/to-do-controller'
+import { AddTodoController } from '../../presentation/to-do/to-do-controller'
 
-export const makeTodoController = (): TodoController => {
+export const makeTodoController = (): AddTodoController => {
   const todoRepository = new TodoRepository()
-  const todo = new Todo(todoRepository)
-  return new TodoController(todo)
+  const todo = new AddTodo(todoRepository)
+  return new AddTodoController(todo)
 }
