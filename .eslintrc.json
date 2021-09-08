@@ -2,7 +2,8 @@
   "extends": "standard-with-typescript",
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": "off",
-    "@typescript-eslint/prefer-nullish-coalescing": "off"
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/naming-convention": "off"
   },
   "parserOptions": {
     "project":"./tsconfig.json"
