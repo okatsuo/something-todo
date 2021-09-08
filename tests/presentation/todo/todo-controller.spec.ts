@@ -7,6 +7,7 @@ const makeAddTodoStub = (): IDbAddTodo => {
     async add (todoData: IAddTodo): Promise<TodoModel> {
       return await Promise.resolve({
         id: 'valid_id',
+        user_id: todoData.user_id,
         name: todoData.name,
         description: todoData.description,
         active: todoData.active
@@ -76,10 +77,10 @@ describe('To-do controller', () => {
 
   test('should return with correct values', async () => {
     const fakeTodo: IAddTodo = {
-      name: 'valid_name',
       active: true,
-      user_id: 'valid_id',
-      description: 'valid_description'
+      description: 'valid_description',
+      name: 'valid_name',
+      user_id: 'valid_user_id'
     }
 
     const { sut } = makeSut()

@@ -3,4 +3,5 @@ export interface TodoModel {
   name: string
   description?: string
   active: boolean
+  user_id: string
 }
