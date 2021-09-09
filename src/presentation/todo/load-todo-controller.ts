@@ -7,7 +7,7 @@ export class LoadTodoController implements Controller {
     private readonly loadTodo: ILoadDbTodo
   ) {}
 
-  async handle (data: ILoadTodo): Promise<TodoModel> {
+  async handle (data: ILoadTodo): Promise<TodoModel[]> {
     return await this.loadTodo.loadTodoByUser(data)
   }
 }

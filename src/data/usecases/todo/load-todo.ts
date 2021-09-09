@@ -6,7 +6,7 @@ export class LoadTodo implements ILoadDbTodo {
     private readonly loadTodoRepository: ILoadDbTodo
   ) {}
 
-  async loadTodoByUser (todoData: ILoadTodo): Promise<TodoModel> {
+  async loadTodoByUser (todoData: ILoadTodo): Promise<TodoModel[]> {
     return await this.loadTodoRepository.loadTodoByUser(todoData)
   }
 }
