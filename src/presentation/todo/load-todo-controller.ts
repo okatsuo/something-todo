@@ -2,7 +2,7 @@ import { TodoModel } from '../../domain/models/to-do'
 import { ILoadDbTodo, ILoadTodo } from '../../domain/usecases/loadTodo'
 import { Controller } from '../protocols/controllers'
 
-export class LoadTodo implements Controller {
+export class LoadTodoController implements Controller {
   constructor (
     private readonly loadTodo: ILoadDbTodo
   ) {}

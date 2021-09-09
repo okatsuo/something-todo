@@ -1,6 +1,6 @@
 import { TodoModel } from '../../../src/domain/models/to-do'
 import { ILoadDbTodo, ILoadTodo } from '../../../src/domain/usecases/loadTodo'
-import { LoadTodo } from '../../../src/presentation/todo/load-todo-controller'
+import { LoadTodoController } from '../../../src/presentation/todo/load-todo-controller'
 
 const makeLoadTodoByUserStub = (): ILoadDbTodo => {
   class LoadTodoByUserStub implements ILoadDbTodo {
@@ -18,13 +18,13 @@ const makeLoadTodoByUserStub = (): ILoadDbTodo => {
 }
 
 interface SutTypes {
-  sut: LoadTodo
+  sut: LoadTodoController
   loadTodoByUserStub: ILoadDbTodo
 }
 
 const makeSut = (): SutTypes => {
   const loadTodoByUserStub = makeLoadTodoByUserStub()
-  const sut = new LoadTodo(loadTodoByUserStub)
+  const sut = new LoadTodoController(loadTodoByUserStub)
   return {
     loadTodoByUserStub,
     sut
