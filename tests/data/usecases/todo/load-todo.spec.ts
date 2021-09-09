@@ -42,4 +42,27 @@ describe('Load todo', () => {
     await sut.loadTodoByUser(fakeUserId)
     expect(loadTodoRepositorySpy).toBeCalledWith(fakeUserId)
   })
+
+  test('should throws if loadTodoRepository throws', async () => {
+    const fakeUserId: ILoadTodo = {
+      user_id: 'valid_id'
+    }
+    const { sut, loadTodoRepositoryStub } = makeSut()
+    jest.spyOn(loadTodoRepositoryStub, 'loadTodoByUser').mockImplementationOnce(async () => await Promise.reject(new Error()))
+    const todo = sut.loadTodoByUser(fakeUserId)
+    await expect(todo).rejects.toThrow()
+  })
+
+  test('should returns with correct values', async () => {
+    const fakeUserId: ILoadTodo = {
+      user_id: 'valid_id'
+    }
+    const { sut } = makeSut()
+    const todo = await sut.loadTodoByUser(fakeUserId)
+    expect(todo.user_id).toBe(fakeUserId.user_id)
+    expect(todo.active).toBeDefined()
+    expect(todo.name).toBeDefined()
+    expect(todo.id).toBeDefined()
+    expect(todo.description).toBeDefined()
+  })
 })
