@@ -1,4 +1,4 @@
-import { LoadTodo } from '../../data/usecases/todo/list-todo'
+import { LoadTodo } from '../../data/usecases/todo/load-todo'
 import { TodoRepository } from '../../infra/db/mongodb/todo-repository/todo'
 import { LoadTodoController } from '../../presentation/todo/load-todo-controller'
 

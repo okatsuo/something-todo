@@ -20,7 +20,7 @@ export class TodoResolver {
   @Query(() => TodoSchema)
   async loadTodo (
     @Arg('user_id') user_id: string
-  ): Promise<TodoModel> {
+  ): Promise<TodoModel[]> {
     const loadTodoByUserIdController = makeLoadTodoByUserIdController()
     return await loadTodoByUserIdController.handle({ user_id })
   }

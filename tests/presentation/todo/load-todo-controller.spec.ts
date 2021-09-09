@@ -4,14 +4,14 @@ import { LoadTodoController } from '../../../src/presentation/todo/load-todo-con
 
 const makeLoadTodoByUserStub = (): ILoadDbTodo => {
   class LoadTodoByUserStub implements ILoadDbTodo {
-    async loadTodoByUser (data: ILoadTodo): Promise<TodoModel> {
-      return {
+    async loadTodoByUser (data: ILoadTodo): Promise<TodoModel[]> {
+      return [{
         ...data,
         name: 'valid_name',
         active: true,
         description: 'valid_description',
         id: 'valid_id'
-      }
+      }]
     }
   }
   return new LoadTodoByUserStub()
@@ -48,12 +48,12 @@ describe('Load todo by user', () => {
     }
     const { sut } = makeSut()
     const todo = await sut.handle(fakeUserId)
-    expect(todo).toEqual({
+    expect(todo).toEqual([{
       ...fakeUserId,
       name: 'valid_name',
       active: true,
       description: 'valid_description',
       id: 'valid_id'
-    })
+    }])
   })
 })

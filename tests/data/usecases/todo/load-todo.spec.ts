@@ -1,18 +1,18 @@
-import { LoadTodo } from '../../../../src/data/usecases/todo/list-todo'
+import { LoadTodo } from '../../../../src/data/usecases/todo/load-todo'
 import { TodoModel } from '../../../../src/domain/models/to-do'
 import { ILoadDbTodo, ILoadTodo } from '../../../../src/domain/usecases/loadTodo'
 
 const makeLoadTodoRepositoryStub = (): ILoadDbTodo => {
   class LoadTodoRepositoryStub implements ILoadDbTodo {
-    async loadTodoByUser (todoData: ILoadTodo): Promise<TodoModel> {
+    async loadTodoByUser (todoData: ILoadTodo): Promise<TodoModel[]> {
       const { user_id } = todoData
-      return {
+      return [{
         user_id,
         active: true,
         id: 'valid_id',
         name: 'valid_name',
         description: 'valid_description'
-      }
+      }]
     }
   }
   return new LoadTodoRepositoryStub()
@@ -59,10 +59,10 @@ describe('Load todo', () => {
     }
     const { sut } = makeSut()
     const todo = await sut.loadTodoByUser(fakeUserId)
-    expect(todo.user_id).toBe(fakeUserId.user_id)
-    expect(todo.active).toBeDefined()
-    expect(todo.name).toBeDefined()
-    expect(todo.id).toBeDefined()
-    expect(todo.description).toBeDefined()
+    expect(todo[0].user_id).toBe(fakeUserId.user_id)
+    expect(todo[0].active).toBeDefined()
+    expect(todo[0].name).toBeDefined()
+    expect(todo[0].id).toBeDefined()
+    expect(todo[0].description).toBeDefined()
   })
 })

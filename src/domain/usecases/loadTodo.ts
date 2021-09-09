@@ -5,5 +5,5 @@ export interface ILoadTodo {
 }
 
 export interface ILoadDbTodo {
-  loadTodoByUser: (data: ILoadTodo) => Promise<TodoModel>
+  loadTodoByUser: (data: ILoadTodo) => Promise<TodoModel[]>
 }

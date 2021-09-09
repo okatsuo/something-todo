@@ -10,9 +10,9 @@ export class TodoRepository implements IDbAddTodo, ILoadDbTodo {
     return todo
   }
 
-  async loadTodoByUser (todoData: ILoadTodo): Promise<TodoModel> {
+  async loadTodoByUser (todoData: ILoadTodo): Promise<TodoModel[]> {
     const { user_id } = todoData
-    const todo = await TodoEntity.findOneOrFail({ where: { user_id } })
+    const todo = await TodoEntity.find({ where: { user_id } })
     return todo
   }
 }
