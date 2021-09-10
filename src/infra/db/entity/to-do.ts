@@ -12,7 +12,7 @@ export class TodoEntity extends BaseEntity {
   @Column({ nullable: true })
   description: string
 
-  @Column({ default: true })
+  @Column()
   active: boolean
 
   @Column()
