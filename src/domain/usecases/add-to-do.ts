@@ -1,10 +1,19 @@
+import { Field, InputType } from 'type-graphql'
 import { TodoModel } from '../models/to-do'
 
-export interface IAddTodo {
+@InputType()
+export class IAddTodo {
+  @Field()
   user_id: string
+
+  @Field()
   name: string
+
+  @Field()
   active: boolean
-  description?: string
+
+  @Field()
+  description: string
 }
 
 export interface IDbAddTodo {
