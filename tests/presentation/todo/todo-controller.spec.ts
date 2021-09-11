@@ -93,11 +93,12 @@ describe('To-do controller', () => {
     const fakeTodo: IAddTodo = {
       name: 'valid_name',
       active: true,
-      user_id: 'valid_id'
+      user_id: 'valid_id',
+      description: ''
     }
 
     const { sut } = makeSut()
     const todo = await sut.handle(fakeTodo)
-    expect(todo.description).not.toBeDefined()
+    expect(todo.description).toBe('')
   })
 })
