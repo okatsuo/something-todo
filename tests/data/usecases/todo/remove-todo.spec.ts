@@ -43,4 +43,14 @@ describe('RemoveTodoController', () => {
     const removed = await sut.remove(fakeId)
     expect(removed).toBe(false)
   })
+
+  test('should call todoRepository with correct values', async () => {
+    const fakeId: IRemoveTodo = {
+      id: 'invalid_id'
+    }
+    const { sut, removeTodoRepositoryStub } = makeSut()
+    const removeTodoRepositorySpy = jest.spyOn(removeTodoRepositoryStub, 'remove')
+    await sut.remove(fakeId)
+    expect(removeTodoRepositorySpy).toBeCalledWith(fakeId)
+  })
 })
