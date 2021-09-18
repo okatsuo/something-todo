@@ -1,4 +1,3 @@
-import { ObjectID } from 'typeorm'
 import { TodoModel } from '../../../../domain/models/to-do'
 import { IAddTodo, IDbAddTodo } from '../../../../domain/usecases/add-to-do'
 import { ILoadDbTodo, ILoadTodo } from '../../../../domain/usecases/loadTodo'
