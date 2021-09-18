@@ -3,6 +3,7 @@ import { TodoModel } from '../../domain/models/to-do'
 import { IAddTodo } from '../../domain/usecases/add-to-do'
 import { makeTodoController } from '../factory/add-to-do'
 import { makeLoadTodoByUserIdController } from '../factory/load-todo'
+import { makeRemoveTodoController } from '../factory/remove-todo'
 import { makeUpdateTodoController } from '../factory/update-todo'
 import { TodoSchema } from '../schema/to-do'
 
@@ -34,5 +35,13 @@ export class TodoResolver {
   ): Promise<any> {
     const updateTodoController = makeUpdateTodoController()
     return await updateTodoController.handle({ todo_id, fields })
+  }
+
+  @Mutation(() => Boolean)
+  async removeTodo (
+    @Arg('id') id: string
+  ): Promise<boolean> {
+    const removeTodoController = makeRemoveTodoController()
+    return await removeTodoController.handle({ id })
   }
 }
