@@ -1,3 +1,4 @@
+import { ObjectID } from 'typeorm'
 import { TodoModel } from '../../../../domain/models/to-do'
 import { IAddTodo, IDbAddTodo } from '../../../../domain/usecases/add-to-do'
 import { ILoadDbTodo, ILoadTodo } from '../../../../domain/usecases/loadTodo'
@@ -20,8 +21,17 @@ export class TodoRepository implements IDbAddTodo, ILoadDbTodo, IUpdateTodoDb, I
 
   async update (todoData: IUpdateTodo): Promise<TodoModel> {
     const { todo_id, fields } = todoData
-    const todo = await TodoEntity.update(todo_id, { ...fields }).then(response => response.raw[0])
-    return todo
+    await TodoEntity.update(todo_id, { ...fields })
+    const todo = await TodoEntity.find(
+      {
+        where:
+         {
+           name: fields.name,
+           user_id: fields.user_id,
+           description: fields.description // TODO refatorar
+         }
+      })
+    return todo[0]
   }
 
   async remove (data: IRemoveTodo): Promise<boolean> {
