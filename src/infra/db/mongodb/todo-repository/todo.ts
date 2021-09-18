@@ -1,10 +1,11 @@
 import { TodoModel } from '../../../../domain/models/to-do'
 import { IAddTodo, IDbAddTodo } from '../../../../domain/usecases/add-to-do'
 import { ILoadDbTodo, ILoadTodo } from '../../../../domain/usecases/loadTodo'
+import { IRemoveTodo, IRemoveTodoDb } from '../../../../domain/usecases/remove-todo'
 import { IUpdateTodo, IUpdateTodoDb } from '../../../../domain/usecases/update-todo'
 import { TodoEntity } from '../../entity/to-do'
 
-export class TodoRepository implements IDbAddTodo, ILoadDbTodo, IUpdateTodoDb {
+export class TodoRepository implements IDbAddTodo, ILoadDbTodo, IUpdateTodoDb, IRemoveTodoDb {
   async add (todoData: IAddTodo): Promise<TodoModel> {
     const todo = TodoEntity.create(todoData)
     await todo.save()
@@ -21,5 +22,11 @@ export class TodoRepository implements IDbAddTodo, ILoadDbTodo, IUpdateTodoDb {
     const { todo_id, fields } = todoData
     const todo = await TodoEntity.update(todo_id, { ...fields }).then(response => response.raw[0])
     return todo
+  }
+
+  async remove (data: IRemoveTodo): Promise<boolean> {
+    const { id } = data
+    const removed = await TodoEntity.delete(id)
+    return !!removed.affected
   }
 }
