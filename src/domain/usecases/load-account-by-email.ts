@@ -1,5 +1,5 @@
-import { IAccountModel } from '../models/account'
+import { account } from '.prisma/client';
 
 export interface ILoadAccountByEmail {
-  loadAccountByEmail: (email: string) => Promise<IAccountModel | undefined>
+  loadAccountByEmail: (email: string) => Promise<account | null>
 }

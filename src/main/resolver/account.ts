@@ -1,5 +1,5 @@
+import { Account } from '.prisma/client'
 import { Arg, Mutation, Query, Resolver } from 'type-graphql'
-import { IAccountModel } from '../../domain/models/account'
 import { ILoginModel } from '../../domain/models/login'
 import { makeAddAccountController } from '../factory/add-account'
 import { makeLoginController } from '../factory/login'
@@ -22,7 +22,7 @@ export class AccountResolver {
     @Arg('name') name: string,
       @Arg('email') email: string,
       @Arg('password') password: string
-  ): Promise<IAccountModel> {
+  ): Promise<Account> {
     const addAccount = makeAddAccountController()
     return await addAccount.handle({ name, email, password })
   }

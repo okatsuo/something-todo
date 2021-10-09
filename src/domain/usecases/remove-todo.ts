@@ -1,5 +1,9 @@
-export interface IRemoveTodo {
-  id: string
+import { Field, InputType, Int } from 'type-graphql'
+
+@InputType()
+export class IRemoveTodo {
+  @Field(() => Int)
+  id: number
 }
 
 export interface IRemoveTodoDb {

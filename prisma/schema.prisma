@@ -10,19 +10,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model account {
-  id       Int    @id @default(autoincrement())
+model Account {
+  id       Int      @id @default(autoincrement())
   name     String
-  email    String @unique
+  email    String   @unique
   password String
-  todo     todo[]
+  active   Boolean? @default(true)
+  todo     Todo[]
 }
 
-model todo {
+model Todo {
   id          Int      @id @default(autoincrement())
   name        String
-  description String?
+  description String?  @default("")
   active      Boolean? @default(true)
   account_id  Int
-  account     account  @relation(fields: [account_id], references: [id])
+  account     Account  @relation(fields: [account_id], references: [id])
 }

@@ -1,4 +1,4 @@
-import { IAccountModel } from '../../domain/models/account'
+import { Account } from '.prisma/client'
 import { IAddAccount, IDbAddAccount } from '../../domain/usecases/add-account'
 import { IEmailValidator } from '../../validation/protocols/email-validator'
 
@@ -8,7 +8,7 @@ export class SignupController {
     private readonly addAccount: IDbAddAccount
   ) {}
 
-  async handle (account: IAddAccount): Promise<IAccountModel> {
+  async handle (account: IAddAccount): Promise<Account> {
     const isValidEmail = this.emailValidator.isValid(account.email)
     if (!isValidEmail) { throw new Error('invalid email') }
     const user = await this.addAccount.add(account)

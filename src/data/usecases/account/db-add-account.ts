@@ -1,4 +1,4 @@
-import { IAccountModel } from '../../../domain/models/account'
+import { Account } from '.prisma/client'
 import { IAddAccount, IDbAddAccount } from '../../../domain/usecases/add-account'
 import { IEncrypter } from '../../protocols/encrypter'
 
@@ -8,7 +8,7 @@ export class DbAddAccount implements IDbAddAccount {
     private readonly addAccountRepository: IDbAddAccount
   ) {}
 
-  async add (account: IAddAccount): Promise<IAccountModel> {
+  async add (account: IAddAccount): Promise<Account> {
     const hashedValue = await this.encrypter.encrypt(account.password)
     const repoAccount = await this.addAccountRepository.add({ ...account, password: hashedValue })
     return repoAccount
