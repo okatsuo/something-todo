@@ -5,7 +5,7 @@
   "main": "src/main/server.ts",
   "scripts": {
     "start": "npm run build && node dist/main/server.js",
-    "build": "rimraf dist && tsc -p tsconfig-build.json",
+    "build": "rimraf dist && tsc -p tsconfig-build.json && npx prisma generate",
     "dev": "nodemon src/main/server.ts --exec ts-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test-verbose": "jest --passWithNoTests --runInBand",
@@ -32,7 +32,6 @@
     "husky": "^7.0.1",
     "jest": "^27.0.6",
     "lint-staged": "^11.1.2",
-    "prisma": "^3.2.1",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
@@ -48,6 +47,7 @@
     "jsonwebtoken": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "type-graphql": "^1.1.1"
+    "type-graphql": "^1.1.1",
+    "prisma": "^3.2.1"
   }
 }
