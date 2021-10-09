@@ -1,6 +1,6 @@
-import { IAccountModel } from './account'
+import { Account } from '.prisma/client'
 
 export interface ILoginModel {
   token: string
-  account: IAccountModel
+  account: Account
 }

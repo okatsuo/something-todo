@@ -21,7 +21,6 @@
     "@types/bcrypt": "^5.0.0",
     "@types/jest": "^26.0.24",
     "@types/jsonwebtoken": "^8.5.4",
-    "@types/mongodb": "^4.0.7",
     "@types/node": "^16.10.3",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "eslint": "^7.32.0",
@@ -47,10 +46,8 @@
     "email-validator": "^2.0.4",
     "graphql": "^15.5.1",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.5.7",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "type-graphql": "^1.1.1",
-    "typeorm": "^0.2.37"
+    "type-graphql": "^1.1.1"
   }
 }
