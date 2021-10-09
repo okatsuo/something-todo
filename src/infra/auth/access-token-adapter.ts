@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { IGenerateAccessToken } from '../../data/protocols/access-token'
 
 export interface IAccessTokenInput {
-  id: string
+  id: number
   name: string
   email: string
 }

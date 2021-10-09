@@ -1,6 +1,6 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql'
-import { TodoModel } from '../../domain/models/to-do'
-import { IAddTodo } from '../../domain/usecases/add-to-do'
+import { Todo } from '.prisma/client'
+import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql'
+import { IUpdateTodo } from '../../domain/usecases/update-todo'
 import { makeTodoController } from '../factory/add-to-do'
 import { makeLoadTodoByUserIdController } from '../factory/load-todo'
 import { makeRemoveTodoController } from '../factory/remove-todo'
@@ -11,35 +11,34 @@ import { TodoSchema } from '../schema/to-do'
 export class TodoResolver {
   @Mutation(() => TodoSchema)
   async todoCreate (
-    @Arg('user_id') user_id: string,
+    @Arg('user_id', () => Int) account_id: number,
       @Arg('name') name: string,
       @Arg('description', { nullable: true }) description: string,
       @Arg('active') active: boolean
-  ): Promise<TodoModel> {
+  ): Promise<Todo> {
     const todoController = makeTodoController()
-    return await todoController.handle({ name, user_id, active, description })
+    return await todoController.handle({ name, account_id, active, description })
   }
 
   @Query(() => [TodoSchema])
   async loadTodo (
-    @Arg('user_id') user_id: string
-  ): Promise<TodoModel[]> {
+    @Arg('user_id', () => Int) account_id: number
+  ): Promise<Todo[]> {
     const loadTodoByUserIdController = makeLoadTodoByUserIdController()
-    return await loadTodoByUserIdController.handle({ user_id })
+    return await loadTodoByUserIdController.handle({ account_id })
   }
 
   @Mutation(() => TodoSchema)
   async updateTodo (
-    @Arg('todo_id') todo_id: string,
-      @Arg('fields') fields: IAddTodo
+    @Arg('fields') fields: IUpdateTodo
   ): Promise<any> {
     const updateTodoController = makeUpdateTodoController()
-    return await updateTodoController.handle({ todo_id, fields })
+    return await updateTodoController.handle({ ...fields })
   }
 
   @Mutation(() => Boolean)
   async removeTodo (
-    @Arg('id') id: string
+    @Arg('id', () => Int) id: number
   ): Promise<boolean> {
     const removeTodoController = makeRemoveTodoController()
     return await removeTodoController.handle({ id })

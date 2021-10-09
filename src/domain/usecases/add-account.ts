@@ -1,4 +1,4 @@
-import { IAccountModel } from '../models/account'
+import { Account } from '.prisma/client'
 
 export interface IAddAccount {
   name: string
@@ -6,5 +6,5 @@ export interface IAddAccount {
   password: string
 }
 export interface IDbAddAccount {
-  add: (account: IAddAccount) => Promise<IAccountModel>
+  add: (account: IAddAccount) => Promise<Account>
 }

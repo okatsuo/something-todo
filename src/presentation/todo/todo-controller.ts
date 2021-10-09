@@ -1,4 +1,4 @@
-import { TodoModel } from '../../domain/models/to-do'
+import { Todo } from '.prisma/client'
 import { IAddTodo, IDbAddTodo } from '../../domain/usecases/add-to-do'
 
 export class AddTodoController {
@@ -6,7 +6,7 @@ export class AddTodoController {
     private readonly addTodo: IDbAddTodo
   ) {}
 
-  async handle (todoData: IAddTodo): Promise<TodoModel> {
+  async handle (todoData: IAddTodo): Promise<Todo> {
     const todo = await this.addTodo.add(todoData)
     return todo
   }

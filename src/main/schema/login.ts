@@ -1,5 +1,5 @@
+import { Account } from '.prisma/client'
 import { Field, ObjectType } from 'type-graphql'
-import { IAccountModel } from '../../domain/models/account'
 import { AccountSchema } from './account'
 
 @ObjectType()
@@ -8,5 +8,5 @@ export class LoginSchema {
   token: string
 
   @Field(() => AccountSchema)
-  account: IAccountModel
+  account: Account
 }
