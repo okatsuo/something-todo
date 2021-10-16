@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import '../helper/containers'
 import { ApolloServer } from 'apollo-server'
 import { buildSchema } from 'type-graphql'
 import { AccountResolver } from './resolver/account'

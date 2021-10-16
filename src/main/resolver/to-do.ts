@@ -1,8 +1,9 @@
 import { Todo } from '.prisma/client'
+import { container } from 'tsyringe'
 import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql'
 import { IUpdateTodo } from '../../domain/usecases/update-todo'
+import { LoadTodoController } from '../../presentation/todo/load-todo-controller'
 import { makeTodoController } from '../factory/add-to-do'
-import { makeLoadTodoByUserIdController } from '../factory/load-todo'
 import { makeRemoveTodoController } from '../factory/remove-todo'
 import { makeUpdateTodoController } from '../factory/update-todo'
 import { TodoSchema } from '../schema/to-do'
@@ -24,8 +25,7 @@ export class TodoResolver {
   async loadTodo (
     @Arg('user_id', () => Int) account_id: number
   ): Promise<Todo[]> {
-    const loadTodoByUserIdController = makeLoadTodoByUserIdController()
-    return await loadTodoByUserIdController.handle({ account_id })
+    return await container.resolve(LoadTodoController).handle({ account_id })
   }
 
   @Mutation(() => TodoSchema)
