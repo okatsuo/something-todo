@@ -1,19 +1,20 @@
+import { Account } from '.prisma/client'
 import { IGenerateAccessToken } from '../../../../src/data/protocols/access-token'
 import { IHashComparer } from '../../../../src/data/protocols/hashComparer'
 import { AccountLogin } from '../../../../src/data/usecases/account/account-login'
-import { IAccountModel } from '../../../../src/domain/models/account'
 import { ILoadAccountByEmail } from '../../../../src/domain/usecases/load-account-by-email'
 import { ILogin } from '../../../../src/domain/usecases/login'
 import { IAccessTokenInput } from '../../../../src/infra/auth/access-token-adapter'
 
 const makeAccountRepository = (): ILoadAccountByEmail => {
   class AccountRepository implements ILoadAccountByEmail {
-    async loadAccountByEmail (email: string): Promise<IAccountModel> {
+    async loadAccountByEmail (email: string): Promise<Account> {
       return {
-        id: 'valid_id',
+        id: 1,
         email: 'valid_email@mail.com',
         name: 'valid_name',
-        password: 'valid_password'
+        password: 'valid_password',
+        active: true
       }
     }
   }
@@ -145,10 +146,11 @@ describe('Account login', () => {
       {
         token: 'valid_token',
         account: {
-          id: 'valid_id',
+          id: 1,
           email: 'valid_email@mail.com',
           name: 'valid_name',
-          password: 'valid_password'
+          password: 'valid_password',
+          active: true
         }
       }
     )
