@@ -1,16 +1,13 @@
-import { TodoModel } from '../../../src/domain/models/to-do'
+import { Todo } from '.prisma/client'
 import { IAddTodo, IDbAddTodo } from '../../../src/domain/usecases/add-to-do'
 import { AddTodoController } from '../../../src/presentation/todo/todo-controller'
 
 const makeAddTodoStub = (): IDbAddTodo => {
   class AddTodoStub implements IDbAddTodo {
-    async add (todoData: IAddTodo): Promise<TodoModel> {
+    async add (todoData: IAddTodo): Promise<Todo> {
       return await Promise.resolve({
-        id: 'valid_id',
-        user_id: todoData.user_id,
-        name: todoData.name,
-        description: todoData.description,
-        active: todoData.active
+        id: 1,
+        ...todoData
       })
     }
   }
@@ -38,7 +35,7 @@ describe('To-do controller', () => {
     const fakeTodo: IAddTodo = {
       name: 'valid_name',
       active: true,
-      user_id: 'valid_id',
+      account_id: 1,
       description: 'valid_description'
     }
 
@@ -52,7 +49,7 @@ describe('To-do controller', () => {
     const fakeTodo: IAddTodo = {
       name: 'valid_name',
       active: true,
-      user_id: 'valid_id',
+      account_id: 1,
       description: 'valid_description'
     }
 
@@ -66,7 +63,7 @@ describe('To-do controller', () => {
     const fakeTodo: IAddTodo = {
       name: 'valid_name',
       active: true,
-      user_id: 'valid_id',
+      account_id: 1,
       description: 'valid_description'
     }
     const { sut, addTodoStub } = makeSut()
@@ -80,7 +77,7 @@ describe('To-do controller', () => {
       active: true,
       description: 'valid_description',
       name: 'valid_name',
-      user_id: 'valid_user_id'
+      account_id: 0
     }
 
     const { sut } = makeSut()
@@ -93,7 +90,7 @@ describe('To-do controller', () => {
     const fakeTodo: IAddTodo = {
       name: 'valid_name',
       active: true,
-      user_id: 'valid_id',
+      account_id: 1,
       description: ''
     }
 
