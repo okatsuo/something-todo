@@ -30,10 +30,11 @@ export class TodoResolver {
 
   @Mutation(() => TodoSchema)
   async updateTodo (
-    @Arg('fields') fields: IUpdateTodo
+    @Arg('id', () => Int) id: number,
+      @Arg('fields') fields: IUpdateTodo
   ): Promise<any> {
     const updateTodoController = makeUpdateTodoController()
-    return await updateTodoController.handle({ ...fields })
+    return await updateTodoController.handle(id, fields)
   }
 
   @Mutation(() => Boolean)

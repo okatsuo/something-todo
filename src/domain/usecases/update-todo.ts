@@ -3,9 +3,6 @@ import { Field, InputType, Int } from 'type-graphql'
 
 @InputType()
 export class IUpdateTodo {
-  @Field(() => Int)
-  todo_id: number
-
   @Field(() => Int, { nullable: true })
   account_id: number
 
@@ -20,5 +17,5 @@ export class IUpdateTodo {
 }
 
 export interface IUpdateTodoDb {
-  update: (todoData: IUpdateTodo) => Promise<Todo>
+  update: (id: number, todoData: IUpdateTodo) => Promise<Todo>
 }
