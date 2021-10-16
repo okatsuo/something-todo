@@ -5,7 +5,7 @@ import { ILoadDbTodo, ILoadTodo } from '../../../domain/usecases/loadTodo'
 @injectable()
 export class LoadTodo implements ILoadDbTodo {
   constructor (
-    @inject('RepositoryTodo')
+    @inject('TodoRepository')
     private readonly loadTodoRepository: ILoadDbTodo
   ) {}
 
