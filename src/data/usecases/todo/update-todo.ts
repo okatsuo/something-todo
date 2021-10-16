@@ -6,7 +6,7 @@ export class UpdateTodo implements IUpdateTodoDb {
     private readonly updateTodoRepository: IUpdateTodoDb
   ) {}
 
-  async update (todoData: IUpdateTodo): Promise<Todo> {
-    return await this.updateTodoRepository.update(todoData)
+  async update (id: number, todoData: IUpdateTodo): Promise<Todo> {
+    return await this.updateTodoRepository.update(id, todoData)
   }
 }

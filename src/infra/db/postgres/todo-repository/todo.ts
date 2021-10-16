@@ -17,10 +17,8 @@ export class TodoPostgresRepository implements IDbAddTodo, ILoadDbTodo, IUpdateT
     return todo
   }
 
-  async update (todoData: IUpdateTodo): Promise<Todo> {
-    const { todo_id, ...rest } = todoData
-
-    const todo = await prisma.todo.update({ where: { id: todo_id }, data: rest })
+  async update (id: number, todoData: IUpdateTodo): Promise<Todo> {
+    const todo = await prisma.todo.update({ where: { id }, data: todoData })
 
     return todo
   }
