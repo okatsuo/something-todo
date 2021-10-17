@@ -4,8 +4,8 @@ import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql'
 import { IUpdateTodo } from '../../domain/usecases/update-todo'
 import { LoadTodoController } from '../../presentation/todo/load-todo-controller'
 import { RemoveTodoController } from '../../presentation/todo/remove-todo-controller'
+import { AddTodoController } from '../../presentation/todo/todo-controller'
 import { UpdateTodoController } from '../../presentation/todo/update-todo-controller'
-import { makeTodoController } from '../factory/add-to-do'
 import { TodoSchema } from '../schema/to-do'
 
 @Resolver()
@@ -17,8 +17,7 @@ export class TodoResolver {
       @Arg('description', { nullable: true }) description: string,
       @Arg('active') active: boolean
   ): Promise<Todo> {
-    const todoController = makeTodoController()
-    return await todoController.handle({ name, account_id, active, description })
+    return await container.resolve(AddTodoController).handle({ name, account_id, active, description })
   }
 
   @Query(() => [TodoSchema])
