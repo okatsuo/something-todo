@@ -3,9 +3,9 @@ import { container } from 'tsyringe'
 import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql'
 import { IUpdateTodo } from '../../domain/usecases/update-todo'
 import { LoadTodoController } from '../../presentation/todo/load-todo-controller'
+import { RemoveTodoController } from '../../presentation/todo/remove-todo-controller'
 import { UpdateTodoController } from '../../presentation/todo/update-todo-controller'
 import { makeTodoController } from '../factory/add-to-do'
-import { makeRemoveTodoController } from '../factory/remove-todo'
 import { TodoSchema } from '../schema/to-do'
 
 @Resolver()
@@ -40,7 +40,6 @@ export class TodoResolver {
   async removeTodo (
     @Arg('id', () => Int) id: number
   ): Promise<boolean> {
-    const removeTodoController = makeRemoveTodoController()
-    return await removeTodoController.handle({ id })
+    return await container.resolve(RemoveTodoController).handle({ id })
   }
 }
