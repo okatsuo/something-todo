@@ -1,2 +1,8 @@
-export { databaseContainers, registerDatabaseContainers } from './database-containers'
-export { repositoryContainers, registerRepositoryContainers } from './repository-containers'
+
+import { registerDatabaseContainers } from './database-containers'
+import { registerRepositoryContainers } from './repository-containers'
+
+export const registerContainers = (): void => {
+  registerDatabaseContainers()
+  registerRepositoryContainers()
+}
