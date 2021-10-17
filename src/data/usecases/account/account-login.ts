@@ -1,13 +1,20 @@
+import { inject, injectable } from 'tsyringe'
 import { ILoginModel } from '../../../domain/models/login'
 import { ILoadAccountByEmail } from '../../../domain/usecases/load-account-by-email'
 import { IAccountLogin, ILogin } from '../../../domain/usecases/login'
 import { IGenerateAccessToken } from '../../protocols/access-token'
 import { IHashComparer } from '../../protocols/hashComparer'
 
+@injectable()
 export class AccountLogin implements IAccountLogin {
   constructor (
+    @inject('AccountRepository')
     private readonly accountRepository: ILoadAccountByEmail,
+
+    @inject('Encrypt')
     private readonly hashComparer: IHashComparer,
+
+    @inject('AccessToken')
     private readonly acessToken: IGenerateAccessToken
   ) {}
 

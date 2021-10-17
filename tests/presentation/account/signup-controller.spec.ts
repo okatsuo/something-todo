@@ -1,4 +1,4 @@
-import { IAccountModel } from '../../../src/domain/models/account'
+import { Account } from '.prisma/client'
 import { IAddAccount, IDbAddAccount } from '../../../src/domain/usecases/add-account'
 import { SignupController } from '../../../src/presentation/account/signup-controller'
 import { IEmailValidator } from '../../../src/validation/protocols/email-validator'
@@ -14,12 +14,10 @@ const makeEmailValidatorStub = (): IEmailValidator => {
 
 const makeAddAccountStub = (): IDbAddAccount => {
   class DbAddAccountStub implements IDbAddAccount {
-    async add (account: IAddAccount): Promise<IAccountModel> {
+    async add (account: IAddAccount): Promise<Account> {
       return {
-        id: 'valid_id',
-        name: account.name,
-        email: account.email,
-        password: account.password
+        id: 1,
+        ...account
       }
     }
   }
@@ -49,7 +47,8 @@ describe('Sign Up', () => {
     const fakeAccount: IAddAccount = {
       name: 'valid_name',
       email: 'valid_email@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
     const { emailValidatorStub, sut } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
@@ -61,7 +60,8 @@ describe('Sign Up', () => {
     const fakeAccount: IAddAccount = {
       name: 'valid_name',
       email: 'valid_email@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
     const { sut } = makeSut()
 
@@ -72,7 +72,8 @@ describe('Sign Up', () => {
     const fakeAccount: IAddAccount = {
       name: 'valid_name',
       email: 'valid_email@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
 
     const { dbAddAccountStub, sut } = makeSut()
@@ -86,16 +87,18 @@ describe('Sign Up', () => {
     const fakeAccount: IAddAccount = {
       name: 'valid_name',
       email: 'valid_email@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
     const { sut } = makeSut()
     const userAccount = await sut.handle(fakeAccount)
     expect(userAccount).toEqual(
       {
-        id: 'valid_id',
+        id: 1,
         name: 'valid_name',
         email: 'valid_email@mail.com',
-        password: 'valid_password'
+        password: 'valid_password',
+        active: true
       }
     )
   })

@@ -5,7 +5,7 @@ import { ILoadAccountByEmail } from '../../../../domain/usecases/load-account-by
 const prisma = new PrismaClient()
 export class AccountPostgresRepository implements IDbAddAccount, ILoadAccountByEmail {
   async add (accountData: IAddAccount): Promise<Account> {
-    const account = await prisma.account.create({ data: { ...accountData, active: false } })
+    const account = await prisma.account.create({ data: { ...accountData } })
     return account
   }
 
