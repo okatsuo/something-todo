@@ -4,11 +4,19 @@ import { Arg, Mutation, Query, Resolver } from 'type-graphql'
 import { ILoginModel } from '../../domain/models/login'
 import { SigninController } from '../../presentation/account/login-controller'
 import { SignupController } from '../../presentation/account/signup-controller'
+import { UserController } from '../../presentation/account/user-controller'
 import { AccountSchema } from '../schema/account'
 import { LoginSchema } from '../schema/login'
 
 @Resolver()
 export class AccountResolver {
+  @Query(() => AccountSchema)
+  async user (
+    @Arg('email') email: string
+  ): Promise<Account | null> {
+    return await container.resolve(UserController).handle(email)
+  }
+
   @Query(() => LoginSchema)
   async accountLogin (
     @Arg('email') email: string,
