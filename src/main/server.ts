@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import '../helper/containers'
+import * as containers from '../helper/containers'
 import { ApolloServer } from 'apollo-server'
 import { buildSchema } from 'type-graphql'
 import { AccountResolver } from './resolver/account'
@@ -7,6 +7,10 @@ import { TodoResolver } from './resolver/to-do'
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 (async function start (): Promise<void> {
+  /* registering tsyringe containers */
+  containers.registerDatabaseContainers()
+  containers.registerRepositoryContainers()
+
   const server = new ApolloServer({
     schema: await buildSchema({
       resolvers: [AccountResolver, TodoResolver]

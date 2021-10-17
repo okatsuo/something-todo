@@ -1,8 +1,11 @@
 import { Todo } from '.prisma/client'
+import { inject, injectable } from 'tsyringe'
 import { IUpdateTodo, IUpdateTodoDb } from '../../domain/usecases/update-todo'
 
+@injectable()
 export class UpdateTodoController {
   constructor (
+    @inject('DatabaseUpdateTodo')
     private readonly updateTodo: IUpdateTodoDb
   ) {}
 
