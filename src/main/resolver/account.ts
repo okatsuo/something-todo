@@ -1,8 +1,9 @@
 import { Account } from '.prisma/client'
+import { container } from 'tsyringe'
 import { Arg, Mutation, Query, Resolver } from 'type-graphql'
 import { ILoginModel } from '../../domain/models/login'
+import { SigninController } from '../../presentation/account/login-controller'
 import { makeAddAccountController } from '../factory/add-account'
-import { makeLoginController } from '../factory/login'
 import { AccountSchema } from '../schema/account'
 import { LoginSchema } from '../schema/login'
 
@@ -13,8 +14,8 @@ export class AccountResolver {
     @Arg('email') email: string,
       @Arg('password') password: string
   ): Promise<ILoginModel> {
-    const accountLogin = makeLoginController()
-    return await accountLogin.handle({ email, password })
+    // return await accountLogin.handle({ email, password })
+    return await container.resolve(SigninController).handle({ email, password })
   }
 
   @Mutation(() => AccountSchema)

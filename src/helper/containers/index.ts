@@ -1,8 +1,10 @@
 
 import { registerDatabaseContainers } from './database-containers'
-import { registerRepositoryContainers } from './repository-containers'
+import { registerInfraContainers } from './repository-containers'
+import { registerValidationContainer } from './validators-container'
 
 export const registerContainers = (): void => {
+  registerInfraContainers()
   registerDatabaseContainers()
-  registerRepositoryContainers()
+  registerValidationContainer()
 }
