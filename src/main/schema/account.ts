@@ -10,4 +10,7 @@ export class AccountSchema {
 
   @Field()
   name: string
+
+  @Field()
+  active: boolean
 }

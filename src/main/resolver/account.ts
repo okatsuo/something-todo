@@ -29,8 +29,9 @@ export class AccountResolver {
   async userCreate (
     @Arg('name') name: string,
       @Arg('email') email: string,
-      @Arg('password') password: string
+      @Arg('password') password: string,
+      @Arg('active') active: boolean
   ): Promise<Account> {
-    return await container.resolve(SignupController).handle({ name, email, password })
+    return await container.resolve(SignupController).handle({ name, email, password, active })
   }
 }
