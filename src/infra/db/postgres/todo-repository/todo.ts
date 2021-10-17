@@ -3,9 +3,10 @@ import { IAddTodo, IDbAddTodo } from '../../../../domain/usecases/add-to-do'
 import { ILoadDbTodo, ILoadTodo } from '../../../../domain/usecases/loadTodo'
 import { IRemoveTodo, IRemoveTodoDb } from '../../../../domain/usecases/remove-todo'
 import { IUpdateTodo, IUpdateTodoDb } from '../../../../domain/usecases/update-todo'
+import { ILoadUserTodo } from '../../../../domain/usecases/user-todo'
 const prisma = new PrismaClient()
 
-export class TodoPostgresRepository implements IDbAddTodo, ILoadDbTodo, IUpdateTodoDb, IRemoveTodoDb {
+export class TodoPostgresRepository implements IDbAddTodo, ILoadDbTodo, IUpdateTodoDb, IRemoveTodoDb, ILoadUserTodo {
   async add (todoData: IAddTodo): Promise<Todo> {
     const todo = await prisma.todo.create({ data: todoData })
     return todo
@@ -31,5 +32,9 @@ export class TodoPostgresRepository implements IDbAddTodo, ILoadDbTodo, IUpdateT
     } catch (error) {
       return false
     }
+  }
+
+  async loadUserTodo (user_id: number): Promise<Todo[]> {
+    return await prisma.todo.findMany({ where: { account_id: user_id } })
   }
 }

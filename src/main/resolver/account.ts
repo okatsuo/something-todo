@@ -1,15 +1,21 @@
-import { Account } from '.prisma/client'
+import { Account, Todo } from '.prisma/client'
 import { container } from 'tsyringe'
-import { Arg, Mutation, Query, Resolver } from 'type-graphql'
+import { Arg, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
 import { ILoginModel } from '../../domain/models/login'
 import { SigninController } from '../../presentation/account/login-controller'
 import { SignupController } from '../../presentation/account/signup-controller'
 import { UserController } from '../../presentation/account/user-controller'
+import { UserTodoController } from '../../presentation/account/user-todo-controller'
 import { AccountSchema } from '../schema/account'
 import { LoginSchema } from '../schema/login'
 
-@Resolver()
+@Resolver(() => AccountSchema)
 export class AccountResolver {
+  @FieldResolver()
+  async todo (@Root() user: Account): Promise<Todo[]> {
+    return await container.resolve(UserTodoController).handle(user.id)
+  }
+
   @Query(() => AccountSchema)
   async user (
     @Arg('email') email: string

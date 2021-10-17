@@ -2,6 +2,7 @@ import { container } from 'tsyringe'
 import { AccountLogin } from '../../../data/usecases/account/account-login'
 import { DbAddAccount } from '../../../data/usecases/account/db-add-account'
 import { UserAccount } from '../../../data/usecases/account/user-account'
+import { UserTodo } from '../../../data/usecases/account/user-todo'
 import { AddTodo } from '../../../data/usecases/todo/add-todo'
 import { LoadTodo } from '../../../data/usecases/todo/load-todo'
 import { RemoveTodo } from '../../../data/usecases/todo/remove-todo'
@@ -17,7 +18,8 @@ export const database_containers = {
   /* ACCOUNT */
   database_account_login: 'DatabaseAccountLogin',
   database_add_account: 'DatabaseAddAccount',
-  database_user_account: 'DatabaseUserAccount'
+  database_user_account: 'DatabaseUserAccount',
+  database_user_todo: 'DatabaseUserTodo'
 }
 
 export const registerDatabaseContainers = (): void => {
@@ -56,5 +58,10 @@ export const registerDatabaseContainers = (): void => {
   container.register(
     database_containers.database_user_account,
     UserAccount
+  )
+
+  container.register(
+    database_containers.database_user_todo,
+    UserTodo
   )
 }
