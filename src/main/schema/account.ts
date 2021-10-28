@@ -1,4 +1,6 @@
+import { Todo } from '.prisma/client'
 import { Field, ObjectType } from 'type-graphql'
+import { TodoSchema } from './to-do'
 
 @ObjectType()
 export class AccountSchema {
@@ -10,4 +12,10 @@ export class AccountSchema {
 
   @Field()
   name: string
+
+  @Field()
+  active: boolean
+
+  @Field(() => [TodoSchema])
+  todo: Todo[]
 }

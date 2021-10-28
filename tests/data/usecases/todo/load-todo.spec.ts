@@ -1,15 +1,15 @@
+import { Todo } from '.prisma/client'
 import { LoadTodo } from '../../../../src/data/usecases/todo/load-todo'
-import { TodoModel } from '../../../../src/domain/models/to-do'
 import { ILoadDbTodo, ILoadTodo } from '../../../../src/domain/usecases/loadTodo'
 
 const makeLoadTodoRepositoryStub = (): ILoadDbTodo => {
   class LoadTodoRepositoryStub implements ILoadDbTodo {
-    async loadTodoByUser (todoData: ILoadTodo): Promise<TodoModel[]> {
-      const { user_id } = todoData
+    async loadTodoByUser (todoData: ILoadTodo): Promise<Todo[]> {
+      const { account_id } = todoData
       return [{
-        user_id,
+        account_id,
         active: true,
-        id: 'valid_id',
+        id: 1,
         name: 'valid_name',
         description: 'valid_description'
       }]
@@ -35,7 +35,7 @@ const makeSut = (): SutTypes => {
 describe('Load todo', () => {
   test('should calls loadTodoRepository with correct values', async () => {
     const fakeUserId: ILoadTodo = {
-      user_id: 'valid_id'
+      account_id: 1
     }
     const { sut, loadTodoRepositoryStub } = makeSut()
     const loadTodoRepositorySpy = jest.spyOn(loadTodoRepositoryStub, 'loadTodoByUser')
@@ -45,7 +45,7 @@ describe('Load todo', () => {
 
   test('should throws if loadTodoRepository throws', async () => {
     const fakeUserId: ILoadTodo = {
-      user_id: 'valid_id'
+      account_id: 1
     }
     const { sut, loadTodoRepositoryStub } = makeSut()
     jest.spyOn(loadTodoRepositoryStub, 'loadTodoByUser').mockImplementationOnce(async () => await Promise.reject(new Error()))
@@ -55,11 +55,11 @@ describe('Load todo', () => {
 
   test('should returns with correct values', async () => {
     const fakeUserId: ILoadTodo = {
-      user_id: 'valid_id'
+      account_id: 1
     }
     const { sut } = makeSut()
     const todo = await sut.loadTodoByUser(fakeUserId)
-    expect(todo[0].user_id).toBe(fakeUserId.user_id)
+    expect(todo[0].account_id).toBe(fakeUserId.account_id)
     expect(todo[0].active).toBeDefined()
     expect(todo[0].name).toBeDefined()
     expect(todo[0].id).toBeDefined()

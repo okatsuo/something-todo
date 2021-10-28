@@ -1,11 +1,21 @@
-import { TodoModel } from '../models/to-do'
-import { IAddTodo } from './add-to-do'
+import { Todo } from '.prisma/client'
+import { Field, InputType, Int } from 'type-graphql'
 
-export interface IUpdateTodo {
-  todo_id: string
-  fields: IAddTodo
+@InputType()
+export class IUpdateTodo {
+  @Field(() => Int, { nullable: true })
+  account_id: number
+
+  @Field({ nullable: true })
+  name: string
+
+  @Field({ nullable: true })
+  active: boolean
+
+  @Field({ nullable: true })
+  description: string
 }
 
 export interface IUpdateTodoDb {
-  update: (todoData: IUpdateTodo) => Promise<TodoModel>
+  update: (id: number, todoData: IUpdateTodo) => Promise<Todo>
 }

@@ -27,7 +27,7 @@ const makeSut = (): SutTypes => {
 describe('RemoveTodoController', () => {
   test('should return true if is valid id', async () => {
     const fakeId: IRemoveTodo = {
-      id: 'valid_id'
+      id: 1
     }
     const { sut } = makeSut()
     const removed = await sut.handle(fakeId)
@@ -36,7 +36,7 @@ describe('RemoveTodoController', () => {
 
   test('should return false if is invalid id', async () => {
     const fakeId: IRemoveTodo = {
-      id: 'invalid_id'
+      id: 0
     }
     const { sut, removeTodoStub } = makeSut()
     jest.spyOn(removeTodoStub, 'remove').mockImplementationOnce(async () => false)

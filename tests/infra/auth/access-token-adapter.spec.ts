@@ -21,7 +21,7 @@ const makeSut = (): SutType => {
 describe('AcessToken', () => {
   test('should calls JWT with correct values ', async () => {
     const fakeData = {
-      id: 'valid_id',
+      id: 1,
       name: 'valid_name',
       email: 'valid_mail@mail.com'
     }
@@ -33,7 +33,7 @@ describe('AcessToken', () => {
 
   test('should return an AccessToken value on success', async () => {
     const fakeData = {
-      id: 'valid_id',
+      id: 1,
       name: 'valid_name',
       email: 'valid_mail@mail.com'
     }
@@ -44,7 +44,7 @@ describe('AcessToken', () => {
 
   test('should throws if JWT lib throw', async () => {
     const fakeData = {
-      id: 'valid_id',
+      id: 1,
       name: 'valid_name',
       email: 'valid_mail@mail.com'
     }

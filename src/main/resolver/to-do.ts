@@ -1,47 +1,44 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql'
-import { TodoModel } from '../../domain/models/to-do'
-import { IAddTodo } from '../../domain/usecases/add-to-do'
-import { makeTodoController } from '../factory/add-to-do'
-import { makeLoadTodoByUserIdController } from '../factory/load-todo'
-import { makeRemoveTodoController } from '../factory/remove-todo'
-import { makeUpdateTodoController } from '../factory/update-todo'
+import { Todo } from '.prisma/client'
+import { container } from 'tsyringe'
+import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql'
+import { IUpdateTodo } from '../../domain/usecases/update-todo'
+import { LoadTodoController } from '../../presentation/todo/load-todo-controller'
+import { RemoveTodoController } from '../../presentation/todo/remove-todo-controller'
+import { AddTodoController } from '../../presentation/todo/todo-controller'
+import { UpdateTodoController } from '../../presentation/todo/update-todo-controller'
 import { TodoSchema } from '../schema/to-do'
 
 @Resolver()
 export class TodoResolver {
   @Mutation(() => TodoSchema)
   async todoCreate (
-    @Arg('user_id') user_id: string,
+    @Arg('user_id', () => Int) account_id: number,
       @Arg('name') name: string,
       @Arg('description', { nullable: true }) description: string,
       @Arg('active') active: boolean
-  ): Promise<TodoModel> {
-    const todoController = makeTodoController()
-    return await todoController.handle({ name, user_id, active, description })
+  ): Promise<Todo> {
+    return await container.resolve(AddTodoController).handle({ name, account_id, active, description })
   }
 
   @Query(() => [TodoSchema])
   async loadTodo (
-    @Arg('user_id') user_id: string
-  ): Promise<TodoModel[]> {
-    const loadTodoByUserIdController = makeLoadTodoByUserIdController()
-    return await loadTodoByUserIdController.handle({ user_id })
+    @Arg('user_id', () => Int) account_id: number
+  ): Promise<Todo[]> {
+    return await container.resolve(LoadTodoController).handle({ account_id })
   }
 
   @Mutation(() => TodoSchema)
   async updateTodo (
-    @Arg('todo_id') todo_id: string,
-      @Arg('fields') fields: IAddTodo
+    @Arg('id', () => Int) id: number,
+      @Arg('fields') fields: IUpdateTodo
   ): Promise<any> {
-    const updateTodoController = makeUpdateTodoController()
-    return await updateTodoController.handle({ todo_id, fields })
+    return await container.resolve(UpdateTodoController).handle(id, fields)
   }
 
   @Mutation(() => Boolean)
   async removeTodo (
-    @Arg('id') id: string
+    @Arg('id', () => Int) id: number
   ): Promise<boolean> {
-    const removeTodoController = makeRemoveTodoController()
-    return await removeTodoController.handle({ id })
+    return await container.resolve(RemoveTodoController).handle({ id })
   }
 }

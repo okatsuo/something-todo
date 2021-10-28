@@ -1,16 +1,16 @@
-import { TodoModel } from '../../../src/domain/models/to-do'
+import { Todo } from '.prisma/client'
 import { ILoadDbTodo, ILoadTodo } from '../../../src/domain/usecases/loadTodo'
 import { LoadTodoController } from '../../../src/presentation/todo/load-todo-controller'
 
 const makeLoadTodoByUserStub = (): ILoadDbTodo => {
   class LoadTodoByUserStub implements ILoadDbTodo {
-    async loadTodoByUser (data: ILoadTodo): Promise<TodoModel[]> {
+    async loadTodoByUser (data: ILoadTodo): Promise<Todo[]> {
       return [{
         ...data,
         name: 'valid_name',
         active: true,
         description: 'valid_description',
-        id: 'valid_id'
+        id: 1
       }]
     }
   }
@@ -34,7 +34,7 @@ const makeSut = (): SutTypes => {
 describe('Load todo by user', () => {
   test('should calls loadTodoByUser with correct values', async () => {
     const fakeUserId: ILoadTodo = {
-      user_id: 'valid_user_id'
+      account_id: 1
     }
     const { sut, loadTodoByUserStub } = makeSut()
     const loadTodoByUserSpy = jest.spyOn(loadTodoByUserStub, 'loadTodoByUser')
@@ -44,7 +44,7 @@ describe('Load todo by user', () => {
 
   test('should return with correct values', async () => {
     const fakeUserId: ILoadTodo = {
-      user_id: 'valid_user_id'
+      account_id: 1
     }
     const { sut } = makeSut()
     const todo = await sut.handle(fakeUserId)
@@ -53,7 +53,7 @@ describe('Load todo by user', () => {
       name: 'valid_name',
       active: true,
       description: 'valid_description',
-      id: 'valid_id'
+      id: 1
     }])
   })
 })

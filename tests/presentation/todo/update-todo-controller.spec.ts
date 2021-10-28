@@ -1,13 +1,13 @@
-import { TodoModel } from '../../../src/domain/models/to-do'
+import { Todo } from '.prisma/client'
 import { IUpdateTodo, IUpdateTodoDb } from '../../../src/domain/usecases/update-todo'
 import { UpdateTodoController } from '../../../src/presentation/todo/update-todo-controller'
 
 const makeUpdateTodoStub = (): IUpdateTodoDb => {
   class UpdateTodoStub implements IUpdateTodoDb {
-    async update (todoData: IUpdateTodo): Promise<TodoModel> {
+    async update (id: number, todoData: IUpdateTodo): Promise<Todo> {
       return {
-        id: todoData.todo_id,
-        ...todoData.fields
+        id,
+        ...todoData
       }
     }
   }
@@ -30,49 +30,43 @@ const makeSut = (): SutTypes => {
 
 describe('UpdateTodo controller', () => {
   test('should call the updateTodo with correct values', async () => {
+    const fake_id = 1
     const fakeDataToUpdate: IUpdateTodo = {
-      todo_id: 'valid_id',
-      fields: {
-        name: 'valid_name',
-        user_id: 'valid_user_id',
-        description: 'valid_description',
-        active: true
-      }
+      name: 'valid_name',
+      account_id: 1,
+      description: 'valid_description',
+      active: true
     }
     const { sut, updateTodoStub } = makeSut()
     const updateTodoSpy = jest.spyOn(updateTodoStub, 'update')
-    await sut.handle(fakeDataToUpdate)
-    expect(updateTodoSpy).toBeCalledWith(fakeDataToUpdate)
+    await sut.handle(fake_id, fakeDataToUpdate)
+    expect(updateTodoSpy).toBeCalledWith(fake_id, fakeDataToUpdate)
   })
 
   test('should return with correct values', async () => {
+    const fake_id = 1
     const fakeDataToUpdate: IUpdateTodo = {
-      todo_id: 'valid_id',
-      fields: {
-        name: 'valid_name',
-        user_id: 'valid_user_id',
-        description: 'valid_description',
-        active: true
-      }
+      name: 'valid_name',
+      account_id: 1,
+      description: 'valid_description',
+      active: true
     }
     const { sut } = makeSut()
-    const updatedTodo = await sut.handle(fakeDataToUpdate)
-    expect(updatedTodo).toEqual({ id: fakeDataToUpdate.todo_id, ...fakeDataToUpdate.fields })
+    const updatedTodo = await sut.handle(fake_id, fakeDataToUpdate)
+    expect(updatedTodo).toEqual({ id: 1, ...fakeDataToUpdate })
   })
 
   test('should throw if updateTodo throws', async () => {
+    const fake_id = 1
     const fakeDataToUpdate: IUpdateTodo = {
-      todo_id: 'valid_id',
-      fields: {
-        name: 'valid_name',
-        user_id: 'valid_user_id',
-        description: 'valid_description',
-        active: true
-      }
+      name: 'valid_name',
+      account_id: 1,
+      description: 'valid_description',
+      active: true
     }
     const { sut, updateTodoStub } = makeSut()
     jest.spyOn(updateTodoStub, 'update').mockImplementationOnce(async () => await Promise.reject(new Error('')))
-    const updatedTodo = sut.handle(fakeDataToUpdate)
+    const updatedTodo = sut.handle(fake_id, fakeDataToUpdate)
     await expect(updatedTodo).rejects.toThrow()
   })
 })

@@ -1,9 +1,12 @@
-import { TodoModel } from '../models/to-do'
+import { Todo } from '.prisma/client'
+import { Field, InputType, Int } from 'type-graphql'
 
-export interface ILoadTodo {
-  user_id: string
+@InputType()
+export class ILoadTodo {
+  @Field(() => Int)
+  account_id: number
 }
 
 export interface ILoadDbTodo {
-  loadTodoByUser: (data: ILoadTodo) => Promise<TodoModel[]>
+  loadTodoByUser: (data: ILoadTodo) => Promise<Todo[]>
 }

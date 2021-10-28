@@ -1,6 +1,6 @@
+import { Account } from '.prisma/client'
 import { IEncrypter } from '../../../../src/data/protocols/encrypter'
 import { DbAddAccount } from '../../../../src/data/usecases/account/db-add-account'
-import { IAccountModel } from '../../../../src/domain/models/account'
 import { IAddAccount, IDbAddAccount } from '../../../../src/domain/usecases/add-account'
 
 const makeEncrypterStub = (): IEncrypter => {
@@ -14,8 +14,8 @@ const makeEncrypterStub = (): IEncrypter => {
 
 const makeDbAddAccountRepoStub = (): IDbAddAccount => {
   class AddAccountRepoStub implements IDbAddAccount {
-    async add (account: IAddAccount): Promise<IAccountModel> {
-      return await Promise.resolve({ ...account, id: 'valid_id' })
+    async add (account: IAddAccount): Promise<Account> {
+      return await Promise.resolve({ ...account, id: 1 })
     }
   }
   return new AddAccountRepoStub()
@@ -45,7 +45,8 @@ describe('DbAddAccount', () => {
     const fakeAccount: IAddAccount = {
       name: 'valid_name',
       email: 'valid_mail@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
     await sut.add(fakeAccount)
     expect(encrypterSpy).toBeCalledWith('valid_password')
@@ -59,7 +60,8 @@ describe('DbAddAccount', () => {
     const account = {
       name: 'valid_name',
       email: 'valid_email@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
     const promise = sut.add(account)
     await expect(promise).rejects.toThrow()
@@ -74,7 +76,8 @@ describe('DbAddAccount', () => {
     const account: IAddAccount = {
       name: 'valid_name',
       email: 'valid_email@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
     const promise = sut.add(account)
     await expect(promise).rejects.toThrow()
@@ -86,7 +89,8 @@ describe('DbAddAccount', () => {
     const fakeAccount: IAddAccount = {
       name: 'valid_name',
       email: 'valid_mail@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
     await sut.add(fakeAccount)
     expect(addAccountRepoSpy).toBeCalledWith({ ...fakeAccount, password: 'hashed_password' })
@@ -97,9 +101,10 @@ describe('DbAddAccount', () => {
     const fakeAccount: IAddAccount = {
       name: 'valid_name',
       email: 'valid_mail@mail.com',
-      password: 'valid_password'
+      password: 'valid_password',
+      active: true
     }
     const repoAccount = await sut.add(fakeAccount)
-    expect(repoAccount).toEqual({ ...fakeAccount, id: 'valid_id', password: 'hashed_password' })
+    expect(repoAccount).toEqual({ ...fakeAccount, id: 1, password: 'hashed_password' })
   })
 })

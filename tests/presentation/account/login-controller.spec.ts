@@ -18,10 +18,11 @@ const makeAccountLoginStub = (): IAccountLogin => {
       return {
         token: 'valid_token',
         account: {
-          id: 'valid_id',
+          id: 1,
           name: 'valid_name',
           email: 'valid_email',
-          password: 'hashed_password'
+          password: 'hashed_password',
+          active: true
         }
       }
     }
@@ -101,10 +102,11 @@ describe('Login', () => {
     expect(loginData).toEqual({
       token: 'valid_token',
       account: {
-        id: 'valid_id',
+        id: 1,
         name: 'valid_name',
         email: 'valid_email',
-        password: 'hashed_password'
+        password: 'hashed_password',
+        active: true
       }
     })
   })

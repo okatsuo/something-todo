@@ -1,13 +1,15 @@
-import { TodoModel } from '../../domain/models/to-do'
+import { Todo } from '.prisma/client'
+import { inject, injectable } from 'tsyringe'
 import { IUpdateTodo, IUpdateTodoDb } from '../../domain/usecases/update-todo'
-import { Controller } from '../protocols/controllers'
 
-export class UpdateTodoController implements Controller {
+@injectable()
+export class UpdateTodoController {
   constructor (
+    @inject('DatabaseUpdateTodo')
     private readonly updateTodo: IUpdateTodoDb
   ) {}
 
-  async handle (todoData: IUpdateTodo): Promise<TodoModel> {
-    return await this.updateTodo.update(todoData)
+  async handle (id: number, todoData: IUpdateTodo): Promise<Todo> {
+    return await this.updateTodo.update(id, todoData)
   }
 }

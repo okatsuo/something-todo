@@ -1,10 +1,10 @@
-import { Field, InputType } from 'type-graphql'
-import { TodoModel } from '../models/to-do'
+import { Todo } from '.prisma/client'
+import { Field, InputType, Int } from 'type-graphql'
 
 @InputType()
 export class IAddTodo {
-  @Field()
-  user_id: string
+  @Field(() => Int)
+  account_id: number
 
   @Field()
   name: string
@@ -17,5 +17,5 @@ export class IAddTodo {
 }
 
 export interface IDbAddTodo {
-  add: (todoData: IAddTodo) => Promise<TodoModel>
+  add: (todoData: IAddTodo) => Promise<Todo>
 }

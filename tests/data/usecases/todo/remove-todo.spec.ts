@@ -25,18 +25,18 @@ const makeSut = (): SutTypes => {
 }
 
 describe('RemoveTodoController', () => {
-  test('should return true if is valid id', async () => {
+  test('should return true if to-do was removed', async () => {
     const fakeId: IRemoveTodo = {
-      id: 'valid_id'
+      id: 1
     }
     const { sut } = makeSut()
     const removed = await sut.remove(fakeId)
     expect(removed).toBe(true)
   })
 
-  test('should return false if is invalid id', async () => {
+  test('should return false if to-do dont exist', async () => {
     const fakeId: IRemoveTodo = {
-      id: 'invalid_id'
+      id: 1
     }
     const { sut, removeTodoRepositoryStub } = makeSut()
     jest.spyOn(removeTodoRepositoryStub, 'remove').mockImplementationOnce(async () => false)
@@ -46,7 +46,7 @@ describe('RemoveTodoController', () => {
 
   test('should call todoRepository with correct values', async () => {
     const fakeId: IRemoveTodo = {
-      id: 'invalid_id'
+      id: 1
     }
     const { sut, removeTodoRepositoryStub } = makeSut()
     const removeTodoRepositorySpy = jest.spyOn(removeTodoRepositoryStub, 'remove')
