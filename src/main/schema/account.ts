@@ -1,11 +1,11 @@
 import { Todo } from '.prisma/client'
-import { Field, ObjectType } from 'type-graphql'
+import { Field, Int, ObjectType } from 'type-graphql'
 import { TodoSchema } from './to-do'
 
 @ObjectType()
 export class AccountSchema {
-  @Field()
-  id: string
+  @Field(() => Int)
+  id: number
 
   @Field()
   email: string

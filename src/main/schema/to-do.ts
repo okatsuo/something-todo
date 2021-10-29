@@ -1,12 +1,12 @@
-import { Field, ObjectType } from 'type-graphql'
+import { Field, Int, ObjectType } from 'type-graphql'
 
 @ObjectType()
 export class TodoSchema {
-  @Field()
-  id: string
+  @Field(() => Int)
+  id: number
 
-  @Field()
-  account_id: string
+  @Field(() => Int)
+  account_id: number
 
   @Field()
   name: string
